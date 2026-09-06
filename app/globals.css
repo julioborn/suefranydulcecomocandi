@@ -1,26 +1,59 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-page: #fdf4f7;
+  --bg-card: #ffffff;
+  --pink-50: #fdf2f8;
+  --pink-100: #fce7f3;
+  --pink-200: #fbcfe8;
+  --pink-300: #f9a8d4;
+  --pink-400: #f472b6;
+  --pink-500: #ec4899;
+  --pink-600: #db2777;
+  --pink-900: #831843;
+  --text-main: #4a1942;
+  --text-body: #6b3a5c;
+  --text-muted: #c4a0b8;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--bg-page);
+  --color-foreground: var(--text-main);
   --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--bg-page);
+  color: var(--text-main);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Gradiente de fondo suave para toda la app */
+.page-gradient {
+  background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 40%, #fff0f9 100%);
+  min-height: 100vh;
+}
+
+/* Botón primario */
+.btn-primary {
+  background: linear-gradient(135deg, #f472b6, #ec4899);
+  color: white;
+  font-weight: 600;
+  border-radius: 1rem;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.2s;
+  box-shadow: 0 4px 14px rgba(236, 72, 153, 0.25);
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, #ec4899, #db2777);
+  box-shadow: 0 6px 20px rgba(236, 72, 153, 0.35);
+  transform: translateY(-1px);
+}
+
+/* Card */
+.card {
+  background: white;
+  border-radius: 1.25rem;
+  border: 1px solid #fce7f3;
+  box-shadow: 0 2px 16px rgba(244, 114, 182, 0.08);
 }
