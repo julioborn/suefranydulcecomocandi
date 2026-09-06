@@ -1,22 +1,24 @@
 {
   "name": "Suefran & Dulce Como Candi",
-  "short_name": "Catálogo",
+  "short_name": "SDC",
   "description": "Catálogo de accesorios y ropa en Calchaquí, Santa Fe.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#fff7f9",
-  "theme_color": "#e8427a",
+  "background_color": "#fdf4f7",
+  "theme_color": "#f472b6",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "/logos/suefran.png",
+      "src": "/logos/sdc.JPG",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/jpeg",
+      "purpose": "any maskable"
     },
     {
-      "src": "/logos/suefran.png",
+      "src": "/logos/sdc.JPG",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/jpeg",
+      "purpose": "any maskable"
     }
   ]
 }

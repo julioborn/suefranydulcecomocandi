@@ -30,7 +30,7 @@ export default function HomePage() {
                        hover:-translate-y-1 transition-all duration-300"
           >
             <div className="relative w-36 h-36 drop-shadow-md group-hover:scale-105 transition-transform duration-300">
-              <Image src="/logos/suefran.png" alt="Suefran" fill className="object-contain" />
+              <Image src="/logos/suefran.jpg" alt="Suefran" fill className="object-contain" />
             </div>
             <div className="text-center">
               <p className="font-semibold text-[#831843]">Suefran</p>

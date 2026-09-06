@@ -14,24 +14,25 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: 'Catálogo',
+    title: 'SDC',
+  },
+  openGraph: {
+    title: 'Suefran & Dulce Como Candi',
+    description: 'Catálogo de accesorios y ropa en Calchaquí, Santa Fe.',
+    images: [{ url: '/logos/sdc.JPG', width: 1080, height: 1080, alt: 'SDC' }],
   },
 }
 
 export const viewport: Viewport = {
-  themeColor: '#e8427a',
+  themeColor: '#f472b6',
   width: 'device-width',
   initialScale: 1,
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es" className={`${geist.variable} h-full`}>
-      <body className="min-h-full flex flex-col bg-[#fff7f9]">{children}</body>
+      <body className="min-h-full flex flex-col bg-[#fdf4f7]">{children}</body>
     </html>
   )
 }

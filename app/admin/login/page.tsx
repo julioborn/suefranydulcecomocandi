@@ -55,7 +55,7 @@ export default function LoginPage() {
           {/* Logos */}
           <div className="flex gap-4 items-center">
             <div className="relative w-16 h-16 drop-shadow-sm">
-              <Image src="/logos/suefran.png" alt="Suefran" fill className="object-contain" />
+              <Image src="/logos/suefran.jpg" alt="Suefran" fill className="object-contain" />
             </div>
             <div className="w-px h-10 bg-pink-100" />
             <div className="relative w-16 h-16 drop-shadow-sm">
