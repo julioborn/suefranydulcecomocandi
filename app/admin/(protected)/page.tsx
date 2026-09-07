@@ -26,30 +26,30 @@ export default async function AdminDashboard() {
 
       <section>
         <p className="text-xs text-[--text-muted] mb-4">Tiendas</p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4">
           {(stores ?? []).map((store) => (
-            <div key={store.id} className="card p-5 flex flex-col gap-5">
-              <div className="flex items-center gap-4">
-                <div className="relative w-14 h-14 rounded-xl overflow-hidden bg-[--bg-subtle]">
+            <div key={store.id} className="card p-4 flex flex-col gap-4">
+              <div className="flex flex-col items-center text-center gap-2">
+                <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-[--bg-subtle]">
                   <Image src={store.logo_url ?? ''} alt={store.name} fill className="object-contain p-1" />
                 </div>
-                <div>
-                  <h3 className="font-serif text-lg text-[--text]">{store.name}</h3>
+                <div className="w-full min-w-0">
+                  <h3 className="font-serif text-base text-[--text] leading-tight break-words">{store.name}</h3>
                   <p className="text-xs text-[--text-muted] capitalize mt-0.5">{store.category}</p>
                 </div>
               </div>
 
-              <div className="flex gap-2">
+              <div className="flex flex-col gap-2">
                 <Link
                   href={`/admin/${store.slug}/productos`}
-                  className="flex-1 btn-primary flex items-center justify-center gap-2 py-2.5"
+                  className="btn-primary flex items-center justify-center gap-2 py-2.5 text-sm"
                 >
                   <Package className="w-4 h-4" />
                   Productos
                 </Link>
                 <Link
                   href={`/admin/${store.slug}/estadisticas`}
-                  className="flex-1 flex items-center justify-center gap-2 text-sm font-medium py-2.5
+                  className="flex items-center justify-center gap-2 text-sm font-medium py-2.5
                              shadow-[var(--shadow)] hover:shadow-[var(--shadow-hover)] text-[--text-muted] rounded-xl
                              hover:border-[--accent] hover:text-[--accent] transition-all"
                 >
