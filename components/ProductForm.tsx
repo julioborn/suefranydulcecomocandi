@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { createClient } from '@/lib/supabase/client'
 import type { Product, Store, ProductMedia, Category, Color } from '@/types'
+import { getColorSwatch } from '@/lib/colorSwatches'
 import { Upload, X, Plus } from 'lucide-react'
 
 const TALLES = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'Único']
@@ -289,12 +290,17 @@ export default function ProductForm({ store, storeSlug, product, initialCategori
                       key={c.id}
                       type="button"
                       onClick={() => toggleColor(c.id)}
-                      className={`text-sm px-3 py-1.5 rounded-full border transition-colors ${
+                      className={`flex items-center gap-1.5 text-sm pl-2 pr-3 py-1.5 rounded-full border transition-colors ${
                         active
                           ? 'bg-pink-400 border-pink-400 text-white font-medium'
                           : 'bg-pink-50/30 border-pink-100 text-[#c4a0b8] hover:border-pink-300'
                       }`}
                     >
+                      <span
+                        className="w-3.5 h-3.5 rounded-full border border-black/10 flex-shrink-0"
+                        style={{ backgroundColor: getColorSwatch(c.name) ?? '#E5E7EB' }}
+                        aria-hidden="true"
+                      />
                       {c.name}
                     </button>
                   )
@@ -303,7 +309,14 @@ export default function ProductForm({ store, storeSlug, product, initialCategori
             )}
 
             {addingColor ? (
-              <div className="flex gap-2">
+              <div className="flex gap-2 items-center">
+                {newColorName.trim() && (
+                  <span
+                    className="w-4 h-4 rounded-full border border-black/10 flex-shrink-0"
+                    style={{ backgroundColor: getColorSwatch(newColorName) ?? '#E5E7EB' }}
+                    aria-hidden="true"
+                  />
+                )}
                 <input
                   autoFocus
                   value={newColorName}

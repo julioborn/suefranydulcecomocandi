@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState, use } from 'react'
 import type { Product, Store, ProductMedia, Color } from '@/types'
+import { getColorSwatch } from '@/lib/colorSwatches'
 import { MessageCircle, ChevronLeft, ChevronRight } from 'lucide-react'
 
 type FullProduct = Product & { store: Store; product_media: ProductMedia[]; colors: Color[] }
@@ -151,8 +152,17 @@ export default function ProductPage({
         {product.colors && product.colors.length > 0 && (
           <div className="px-5 py-3.5 flex items-center justify-between border-b border-[#F0EBED]">
             <span className="text-sm text-[--text-muted]">Color</span>
-            <span className="text-sm font-semibold text-[--text]">
-              {product.colors.map((c) => c.name).join(', ')}
+            <span className="flex items-center gap-2 flex-wrap justify-end">
+              {product.colors.map((c) => (
+                <span key={c.id} className="flex items-center gap-1.5 text-sm font-semibold text-[--text]">
+                  <span
+                    className="w-3.5 h-3.5 rounded-full border border-black/10 flex-shrink-0"
+                    style={{ backgroundColor: getColorSwatch(c.name) ?? '#E5E7EB' }}
+                    aria-hidden="true"
+                  />
+                  {c.name}
+                </span>
+              ))}
             </span>
           </div>
         )}

@@ -3,11 +3,22 @@
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import type { Color, Store } from '@/types'
+import { getColorSwatch } from '@/lib/colorSwatches'
 import { Pencil, Trash2, Plus, Check, X } from 'lucide-react'
 
 interface Props {
   store: Store
   initialColors: Color[]
+}
+
+function Swatch({ name }: { name: string }) {
+  return (
+    <span
+      className="w-4 h-4 rounded-full border border-black/10 flex-shrink-0"
+      style={{ backgroundColor: getColorSwatch(name) ?? '#E5E7EB' }}
+      aria-hidden="true"
+    />
+  )
 }
 
 const inputClass =
@@ -84,7 +95,8 @@ export default function ColorManager({ store, initialColors }: Props) {
 
   return (
     <div className="card p-5 flex flex-col gap-4">
-      <form onSubmit={createColor} className="flex gap-2">
+      <form onSubmit={createColor} className="flex gap-2 items-center">
+        {newName.trim() && <Swatch name={newName} />}
         <input
           value={newName}
           onChange={(e) => setNewName(e.target.value)}
@@ -113,6 +125,7 @@ export default function ColorManager({ store, initialColors }: Props) {
             >
               {editingId === color.id ? (
                 <>
+                  <Swatch name={editingName} />
                   <input
                     value={editingName}
                     onChange={(e) => setEditingName(e.target.value)}
@@ -132,6 +145,7 @@ export default function ColorManager({ store, initialColors }: Props) {
                 </>
               ) : (
                 <>
+                  <Swatch name={color.name} />
                   <span className="flex-1 text-sm font-medium text-[#4a1942]">{color.name}</span>
                   <button onClick={() => startEdit(color)} className="p-2 rounded-lg text-[#c4a0b8] hover:text-pink-500 hover:bg-pink-100 transition-colors">
                     <Pencil className="w-4 h-4" />
