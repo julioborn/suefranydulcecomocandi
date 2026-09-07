@@ -30,10 +30,7 @@ export default function HomePage() {
             <div className="relative w-full aspect-square rounded-xl overflow-hidden bg-[--bg-subtle]">
               <Image src="/logos/suefran.jpg" alt="Suefran" fill className="object-contain p-2 group-hover:scale-105 transition-transform duration-300" />
             </div>
-            <div className="text-center">
-              <p className="font-serif text-lg text-[--text]">Suefran</p>
-              <p className="text-xs text-[--text-muted] mt-0.5">Accesorios</p>
-            </div>
+            <p className="text-xs tracking-[0.2em] text-[--text-muted] uppercase">Accesorios</p>
           </Link>
 
           {/* Dulce Como Candi */}
@@ -45,10 +42,7 @@ export default function HomePage() {
             <div className="relative w-full aspect-square rounded-xl overflow-hidden bg-[--bg-subtle]">
               <Image src="/logos/dulcecomocandi.png" alt="Dulce Como Candi" fill className="object-contain p-2 group-hover:scale-105 transition-transform duration-300" />
             </div>
-            <div className="text-center">
-              <p className="font-serif text-lg text-[--text]">Dulce Como Candi</p>
-              <p className="text-xs text-[--text-muted] mt-0.5">Ropa</p>
-            </div>
+            <p className="text-xs tracking-[0.2em] text-[--text-muted] uppercase">Ropa</p>
           </Link>
         </div>
       </div>
