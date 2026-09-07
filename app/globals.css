@@ -62,7 +62,7 @@ body {
 .shop-awning {
   position: relative;
   width: 100%;
-  height: calc(env(safe-area-inset-top, 0px) + 22px);
+  height: 22px;
   background: repeating-linear-gradient(90deg, #f472b6 0 22px, #ffffff 22px 45px);
   box-shadow: 0 4px 10px rgba(131, 24, 67, 0.2);
 }
