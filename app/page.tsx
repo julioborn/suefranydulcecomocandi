@@ -24,7 +24,7 @@ export default function HomePage() {
         </div>
 
         {/* Cards de tiendas */}
-        <div className="flex flex-col sm:flex-row gap-6 w-full max-w-lg">
+        <div className="flex flex-row gap-4 w-full max-w-lg">
           {/* Suefran */}
           <Link
             href="/suefran"
