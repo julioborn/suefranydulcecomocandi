@@ -58,11 +58,11 @@ body {
   box-shadow: 0 2px 16px rgba(244, 114, 182, 0.08);
 }
 
-/* Toldo de tienda: sólo panzas blancas flotando sobre el fondo, sin contenedor */
+/* Toldo de tienda: cuerpo blanco y luego panzas flotando sobre el fondo */
 .shop-awning {
   position: relative;
   width: 100%;
-  height: env(safe-area-inset-top, 0px);
+  height: calc(env(safe-area-inset-top, 0px) + 18px);
   background: #ffffff;
 }
 .shop-awning::after {
