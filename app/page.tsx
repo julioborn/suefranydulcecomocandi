@@ -1,12 +1,14 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { MapPin } from 'lucide-react'
-import HiddenAdminAccess from '@/components/HiddenAdminAccess'
+import { MapPin, Settings } from 'lucide-react'
+import { createClient } from '@/lib/supabase/server'
 
-export default function HomePage() {
+export default async function HomePage() {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
   return (
     <main className="flex flex-col min-h-screen page-gradient">
-      <HiddenAdminAccess />
       {/* Círculos decorativos de fondo */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-pink-200/30 blur-3xl" />
@@ -61,6 +63,21 @@ export default function HomePage() {
             </div>
           </Link>
         </div>
+
+        {/* Botón admin — solo visible si hay sesión */}
+        {user && (
+          <Link
+            href="/admin"
+            className="flex items-center gap-2 px-6 py-3 rounded-2xl border border-pink-200
+                       bg-white/70 backdrop-blur text-[#831843] text-sm font-semibold
+                       shadow-[0_2px_12px_rgba(244,114,182,0.12)]
+                       hover:bg-white hover:border-pink-300 hover:shadow-[0_4px_16px_rgba(244,114,182,0.2)]
+                       transition-all duration-200"
+          >
+            <Settings className="w-4 h-4" />
+            Administración
+          </Link>
+        )}
       </div>
 
       {/* Footer */}
