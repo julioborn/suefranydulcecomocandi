@@ -1,18 +1,16 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { MapPin } from 'lucide-react'
-import { createClient } from '@/lib/supabase/server'
+import HomeLogo from '@/components/HomeLogo'
 
-export default async function HomePage() {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-
+export default function HomePage() {
   return (
     <main className="flex flex-col min-h-screen bg-[#FAF8F6]">
       <div className="flex flex-col items-center justify-center flex-1 px-5 py-12 gap-10">
 
         {/* Encabezado */}
         <div className="text-center">
+          <HomeLogo />
           <p className="text-xs tracking-[0.2em] text-[--text-muted] mb-3">
             Calchaquí, Santa Fe
           </p>
@@ -53,18 +51,6 @@ export default async function HomePage() {
             </div>
           </Link>
         </div>
-
-        {/* Botón admin — solo si hay sesión */}
-        {user && (
-          <Link
-            href="/admin"
-            className="text-sm text-[--text-muted] bg-white shadow-[var(--shadow)]
-                       px-5 py-2.5 rounded-xl hover:shadow-[var(--shadow-hover)] hover:text-[--accent]
-                       transition-all duration-200"
-          >
-            Administración
-          </Link>
-        )}
       </div>
 
       <footer className="py-6 px-4 text-center border-t border-[#EDE7EB]">
