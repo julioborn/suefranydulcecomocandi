@@ -6,9 +6,9 @@ import { createClient } from '@/lib/supabase/client'
 import Image from 'next/image'
 
 const USUARIO_MAP: Record<string, string> = {
-  victoria: 'victoria@admin.local',
-  lucia: 'lucia@admin.local',
-  emilia: 'emilia@admin.local',
+  victoria: 'victoria@suefran.com',
+  lucia: 'lucia@suefran.com',
+  emilia: 'emilia@suefran.com',
 }
 
 export default function LoginPage() {
