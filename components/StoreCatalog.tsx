@@ -61,11 +61,9 @@ export default function StoreCatalog({ store, storeSlug, categoryOrder, products
           <div key={selected} className="max-w-4xl mx-auto flex flex-col gap-10 animate-catalog-in">
             {groups.map(({ cat, products }) => (
               <div key={cat} className="flex flex-col gap-3">
-                {selected === TODOS && (
-                  <h2 className="text-xs tracking-[0.2em] text-[--text-muted] uppercase font-medium">
-                    {cat}
-                  </h2>
-                )}
+                <h2 className="font-serif text-xl text-[--text]">
+                  {cat}
+                </h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
                   {products.map((product, i) => {
                     const cover = product.product_media?.find((m) => m.type === 'image')
