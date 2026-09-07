@@ -29,6 +29,21 @@ export default function StoreAwning({ className }: { className?: string }) {
           />
         )
       })}
+      {COLORS.map((_, i) => {
+        const x0 = i * STRIPE_WIDTH
+        const x1 = x0 + STRIPE_WIDTH
+        return (
+          <path
+            key={`edge-${i}`}
+            d={`M ${x1} ${CANOPY_HEIGHT} A ${SCALLOP_RADIUS} ${SCALLOP_RADIUS} 0 0 1 ${x0} ${CANOPY_HEIGHT}`}
+            fill="none"
+            stroke="rgba(0,0,0,0.14)"
+            strokeWidth={2}
+            strokeLinecap="round"
+            vectorEffect="non-scaling-stroke"
+          />
+        )
+      })}
     </svg>
   )
 }
