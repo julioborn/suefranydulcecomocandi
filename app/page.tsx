@@ -15,7 +15,7 @@ export default function HomePage() {
         <div className="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-pink-300/20 blur-3xl" />
       </div>
 
-      <div className="relative flex flex-col items-center justify-center flex-1 px-6 py-16 gap-10">
+      <div className="relative flex flex-col items-center justify-center flex-1 px-4 py-8 gap-8">
         {/* Título */}
         <div className="text-center space-y-2">
           <p className="text-xs font-semibold tracking-[0.25em] text-pink-400 uppercase">Calchaquí, Santa Fe</p>
@@ -24,21 +24,21 @@ export default function HomePage() {
         </div>
 
         {/* Cards de tiendas */}
-        <div className="flex flex-row gap-4 w-full max-w-lg">
+        <div className="flex flex-row gap-3 w-full">
           {/* Suefran */}
           <Link
             href="/suefran"
-            className="group flex-1 flex flex-col items-center gap-5 bg-white/80 backdrop-blur rounded-3xl p-8
+            className="group flex-1 flex flex-col items-center gap-3 bg-white/80 backdrop-blur rounded-3xl p-5
                        border border-pink-100 shadow-[0_4px_24px_rgba(244,114,182,0.12)]
                        hover:shadow-[0_8px_32px_rgba(244,114,182,0.25)] hover:border-pink-200
                        hover:-translate-y-1 transition-all duration-300"
           >
-            <div className="relative w-36 h-36 drop-shadow-md group-hover:scale-105 transition-transform duration-300">
+            <div className="relative w-full aspect-square drop-shadow-md group-hover:scale-105 transition-transform duration-300">
               <Image src="/logos/suefran.jpg" alt="Suefran" fill className="object-contain" />
             </div>
             <div className="text-center">
-              <p className="font-semibold text-[#831843]">Suefran</p>
-              <span className="inline-block mt-1 text-xs bg-pink-50 text-pink-400 px-3 py-0.5 rounded-full font-medium">
+              <p className="font-semibold text-[#831843] text-sm">Suefran</p>
+              <span className="inline-block mt-1 text-xs bg-pink-50 text-pink-400 px-2 py-0.5 rounded-full font-medium">
                 Accesorios
               </span>
             </div>
@@ -47,17 +47,17 @@ export default function HomePage() {
           {/* Dulce Como Candi */}
           <Link
             href="/dulce-como-candi"
-            className="group flex-1 flex flex-col items-center gap-5 bg-white/80 backdrop-blur rounded-3xl p-8
+            className="group flex-1 flex flex-col items-center gap-3 bg-white/80 backdrop-blur rounded-3xl p-5
                        border border-pink-100 shadow-[0_4px_24px_rgba(244,114,182,0.12)]
                        hover:shadow-[0_8px_32px_rgba(244,114,182,0.25)] hover:border-pink-200
                        hover:-translate-y-1 transition-all duration-300"
           >
-            <div className="relative w-36 h-36 drop-shadow-md group-hover:scale-105 transition-transform duration-300">
+            <div className="relative w-full aspect-square drop-shadow-md group-hover:scale-105 transition-transform duration-300">
               <Image src="/logos/dulcecomocandi.png" alt="Dulce Como Candi" fill className="object-contain" />
             </div>
             <div className="text-center">
-              <p className="font-semibold text-[#831843]">Dulce Como Candi</p>
-              <span className="inline-block mt-1 text-xs bg-pink-50 text-pink-400 px-3 py-0.5 rounded-full font-medium">
+              <p className="font-semibold text-[#831843] text-sm">Dulce Como Candi</p>
+              <span className="inline-block mt-1 text-xs bg-pink-50 text-pink-400 px-2 py-0.5 rounded-full font-medium">
                 Ropa
               </span>
             </div>
