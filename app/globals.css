@@ -28,6 +28,11 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Evitar zoom automático en inputs en iOS */
+input, textarea, select {
+  font-size: 16px !important;
+}
+
 /* Gradiente de fondo suave para toda la app */
 .page-gradient {
   background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 40%, #fff0f9 100%);
