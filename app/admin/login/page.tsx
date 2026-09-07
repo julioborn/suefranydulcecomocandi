@@ -46,13 +46,10 @@ export default function LoginPage() {
   return (
     <main className="min-h-screen flex items-center justify-center px-6 bg-[#FAF8F6]">
       <div className="w-full max-w-sm">
-        {/* Logos */}
-        <div className="flex justify-center gap-5 mb-8">
+        {/* Logo */}
+        <div className="flex justify-center mb-8">
           <div className="relative w-14 h-14 rounded-xl overflow-hidden bg-[--bg-subtle]">
-            <Image src="/logos/suefran.jpg" alt="Suefran" fill className="object-contain p-1" />
-          </div>
-          <div className="relative w-14 h-14 rounded-xl overflow-hidden bg-[--bg-subtle]">
-            <Image src="/logos/dulcecomocandi.png" alt="Dulce Como Candi" fill className="object-contain p-1" />
+            <Image src="/logos/sdc.JPG" alt="SDC" fill className="object-contain p-1" />
           </div>
         </div>
 
