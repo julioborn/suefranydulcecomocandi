@@ -2,14 +2,16 @@
 
 :root {
   --bg: #FAF8F6;
-  --bg-subtle: #F3EEF0;
-  --border: #E8E0E4;
+  --bg-subtle: #F5F0F2;
+  --border: #EDE7EB;
+  --shadow: 0 2px 16px rgba(184, 84, 112, 0.07);
+  --shadow-hover: 0 6px 28px rgba(184, 84, 112, 0.14);
   --text: #1C0F14;
-  --text-muted: #6B5460;
+  --text-muted: #7A606D;
   --accent: #B85470;
   --accent-dark: #8C3D55;
   --font-sans: var(--font-geist), system-ui, sans-serif;
-  --font-serif: var(--font-playfair), Georgia, serif;
+  --font-serif: var(--font-serif), Georgia, serif;
 }
 
 @theme inline {
@@ -24,17 +26,14 @@ body {
   overscroll-behavior-y: none;
 }
 
-/* Evitar zoom automático en inputs en iOS */
 input, textarea, select {
   font-size: 16px !important;
 }
 
-/* Serif para headings editoriales */
 .font-serif {
   font-family: var(--font-serif);
 }
 
-/* Botón primario */
 .btn-primary {
   background: var(--accent);
   color: white;
@@ -44,16 +43,17 @@ input, textarea, select {
   transition: background 0.15s, transform 0.15s;
   font-family: var(--font-sans);
   font-size: 0.875rem;
-  letter-spacing: 0.01em;
 }
 .btn-primary:hover {
   background: var(--accent-dark);
   transform: translateY(-1px);
 }
 
-/* Card base */
 .card {
   background: white;
-  border-radius: 0.75rem;
-  border: 1px solid var(--border);
+  border-radius: 1rem;
+  box-shadow: var(--shadow);
+}
+.card:hover {
+  box-shadow: var(--shadow-hover);
 }

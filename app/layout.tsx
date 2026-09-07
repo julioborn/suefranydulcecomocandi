@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Geist, Playfair_Display } from 'next/font/google'
+import { Geist, Cormorant_Garamond } from 'next/font/google'
 import PullToRefresh from '@/components/PullToRefresh'
 import './globals.css'
 
@@ -8,9 +8,10 @@ const geist = Geist({
   subsets: ['latin'],
 })
 
-const playfair = Playfair_Display({
-  variable: '--font-playfair',
+const cormorant = Cormorant_Garamond({
+  variable: '--font-serif',
   subsets: ['latin'],
+  weight: ['400', '500', '600'],
   style: ['normal', 'italic'],
 })
 
@@ -38,7 +39,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es" className={`${geist.variable} ${playfair.variable} h-full`}>
+    <html lang="es" className={`${geist.variable} ${cormorant.variable} h-full`}>
       <body className="min-h-full flex flex-col bg-[#FAF8F6] text-[#1C0F14]">
         <PullToRefresh>{children}</PullToRefresh>
       </body>

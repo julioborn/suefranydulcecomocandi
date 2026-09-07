@@ -26,7 +26,7 @@ export default async function HomePage() {
           <Link
             href="/suefran"
             className="group flex-1 flex flex-col items-center gap-3 bg-white rounded-2xl p-5
-                       border border-[--border] hover:border-[--accent] transition-all duration-200"
+                       shadow-[var(--shadow)] hover:shadow-[var(--shadow-hover)] transition-shadow duration-200"
           >
             <div className="relative w-full aspect-square rounded-xl overflow-hidden bg-[--bg-subtle]">
               <Image src="/logos/suefran.jpg" alt="Suefran" fill className="object-contain p-2 group-hover:scale-105 transition-transform duration-300" />
@@ -40,7 +40,7 @@ export default async function HomePage() {
           <Link
             href="/dulce-como-candi"
             className="group flex-1 flex flex-col items-center gap-3 bg-white rounded-2xl p-5
-                       border border-[--border] hover:border-[--accent] transition-all duration-200"
+                       shadow-[var(--shadow)] hover:shadow-[var(--shadow-hover)] transition-shadow duration-200"
           >
             <div className="relative w-full aspect-square rounded-xl overflow-hidden bg-[--bg-subtle]">
               <Image src="/logos/dulcecomocandi.png" alt="Dulce Como Candi" fill className="object-contain p-2 group-hover:scale-105 transition-transform duration-300" />
@@ -56,8 +56,8 @@ export default async function HomePage() {
         {user && (
           <Link
             href="/admin"
-            className="text-sm text-[--text-muted] border border-[--border] bg-white
-                       px-5 py-2.5 rounded-xl hover:border-[--accent] hover:text-[--accent]
+            className="text-sm text-[--text-muted] bg-white shadow-[var(--shadow)]
+                       px-5 py-2.5 rounded-xl hover:shadow-[var(--shadow-hover)] hover:text-[--accent]
                        transition-all duration-200"
           >
             Administración

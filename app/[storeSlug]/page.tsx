@@ -64,8 +64,8 @@ export default async function StorePage({ params }: PageProps) {
                 <Link
                   key={product.id}
                   href={`/${storeSlug}/${product.id}`}
-                  className="group bg-white rounded-xl overflow-hidden border border-[--border]
-                             hover:border-[--accent] transition-colors duration-200"
+                  className="group bg-white rounded-xl overflow-hidden shadow-[var(--shadow)]
+                             hover:shadow-[var(--shadow-hover)] transition-shadow duration-200"
                 >
                   <div className="relative aspect-square bg-[--bg-subtle]">
                     {cover ? (
@@ -79,7 +79,7 @@ export default async function StorePage({ params }: PageProps) {
                       <div className="w-full h-full flex items-center justify-center text-3xl text-[--border]">🛍️</div>
                     )}
                   </div>
-                  <div className="p-3 border-t border-[--border]">
+                  <div className="p-3 border-t border-[#F0EBEd]">
                     <p className="text-sm text-[--text] font-medium truncate leading-snug">{product.name}</p>
                     <p className="text-sm font-semibold text-[--accent] mt-0.5">
                       ${product.price.toLocaleString('es-AR')}
@@ -95,7 +95,7 @@ export default async function StorePage({ params }: PageProps) {
         )}
       </section>
 
-      <footer className="py-5 px-4 text-center border-t border-[--border]">
+      <footer className="py-5 px-4 text-center border-t border-[#F0EBEd]">
         <a
           href="https://maps.google.com/?q=Roque+Sáenz+Peña+1054,+Calchaquí,+Santa+Fe"
           target="_blank"

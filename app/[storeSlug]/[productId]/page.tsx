@@ -55,7 +55,7 @@ export default function ProductPage({
   return (
     <main className="max-w-lg mx-auto min-h-screen pb-28 bg-[#FAF8F6]">
       {/* Header */}
-      <header className="sticky top-0 z-10 bg-[#FAF8F6]/90 backdrop-blur-md border-b border-[--border] px-4 py-3">
+      <header className="sticky top-0 z-10 bg-[#FAF8F6]/90 backdrop-blur-md border-b border-[#F0EBED] px-4 py-3">
         <Link
           href={`/${storeSlug}`}
           className="inline-flex items-center gap-1 text-sm text-[--text-muted] hover:text-[--accent] transition-colors"
@@ -65,7 +65,7 @@ export default function ProductPage({
         </Link>
       </header>
 
-      <div className="bg-white border-b border-[--border]">
+      <div className="bg-white border-b border-[#F0EBED]">
         {/* Imagen */}
         {images.length > 0 ? (
           <div className="relative w-full h-72 bg-[--bg-subtle]">
@@ -75,14 +75,14 @@ export default function ProductPage({
                 <button
                   onClick={() => setMediaIndex((i) => Math.max(0, i - 1))}
                   disabled={mediaIndex === 0}
-                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 rounded-full p-1.5 shadow-sm border border-[--border] disabled:opacity-30"
+                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 rounded-full p-1.5 shadow-sm shadow-[var(--shadow)] disabled:opacity-30"
                 >
                   <ChevronLeft className="w-4 h-4 text-[--text]" />
                 </button>
                 <button
                   onClick={() => setMediaIndex((i) => Math.min(images.length - 1, i + 1))}
                   disabled={mediaIndex === images.length - 1}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 rounded-full p-1.5 shadow-sm border border-[--border] disabled:opacity-30"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 rounded-full p-1.5 shadow-sm shadow-[var(--shadow)] disabled:opacity-30"
                 >
                   <ChevronRight className="w-4 h-4 text-[--text]" />
                 </button>
@@ -122,22 +122,22 @@ export default function ProductPage({
       </div>
 
       {/* Detalles */}
-      <div className="bg-white mt-2 border-y border-[--border]">
+      <div className="bg-white mt-2 border-y border-[#F0EBED]">
         {product.description && (
-          <div className="px-5 py-4 border-b border-[--border]">
+          <div className="px-5 py-4 border-b border-[#F0EBED]">
             <p className="text-sm text-[--text-muted] leading-relaxed">{product.description}</p>
           </div>
         )}
 
         {product.talle && (
-          <div className="px-5 py-3.5 flex items-center justify-between border-b border-[--border]">
+          <div className="px-5 py-3.5 flex items-center justify-between border-b border-[#F0EBED]">
             <span className="text-sm text-[--text-muted]">Talle</span>
             <span className="text-sm font-semibold text-[--text]">{product.talle}</span>
           </div>
         )}
 
         {product.colores && product.colores.length > 0 && (
-          <div className="px-5 py-3.5 flex items-center justify-between border-b border-[--border]">
+          <div className="px-5 py-3.5 flex items-center justify-between border-b border-[#F0EBED]">
             <span className="text-sm text-[--text-muted]">Color</span>
             <span className="text-sm font-semibold text-[--text]">{product.colores.join(', ')}</span>
           </div>

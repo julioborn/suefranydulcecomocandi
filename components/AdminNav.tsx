@@ -17,7 +17,7 @@ export default function AdminNav({ userEmail, userName }: { userEmail: string; u
   }
 
   return (
-    <header className="bg-white border-b border-[--border] px-4 py-3">
+    <header className="bg-white shadow-[0_1px_8px_rgba(0,0,0,0.06)] px-4 py-3">
       <div className="max-w-5xl mx-auto flex items-center gap-3">
         <div className="relative w-8 h-8 rounded-lg overflow-hidden bg-[--bg-subtle]">
           <Image src="/logos/sdc.JPG" alt="SDC" fill className="object-contain" />

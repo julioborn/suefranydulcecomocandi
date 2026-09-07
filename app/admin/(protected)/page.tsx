@@ -17,7 +17,7 @@ export default async function AdminDashboard() {
         </div>
         <Link
           href="/"
-          className="text-sm text-[--text-muted] border border-[--border] bg-white
+          className="text-sm text-[--text-muted] shadow-[var(--shadow)] hover:shadow-[var(--shadow-hover)] bg-white
                      px-4 py-2 rounded-xl hover:border-[--accent] hover:text-[--accent] transition-all"
         >
           Ver tiendas
@@ -50,7 +50,7 @@ export default async function AdminDashboard() {
                 <Link
                   href={`/admin/${store.slug}/estadisticas`}
                   className="flex-1 flex items-center justify-center gap-2 text-sm font-medium py-2.5
-                             border border-[--border] text-[--text-muted] rounded-xl
+                             shadow-[var(--shadow)] hover:shadow-[var(--shadow-hover)] text-[--text-muted] rounded-xl
                              hover:border-[--accent] hover:text-[--accent] transition-all"
                 >
                   <BarChart2 className="w-4 h-4" />
