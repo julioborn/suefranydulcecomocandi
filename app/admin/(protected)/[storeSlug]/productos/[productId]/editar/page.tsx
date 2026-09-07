@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import type { Store, Product, ProductMedia } from '@/types'
+import type { Store, Product, ProductMedia, Category } from '@/types'
 import ProductForm from '@/components/ProductForm'
 
 interface PageProps {
@@ -22,11 +22,17 @@ export default async function EditarProductoPage({ params }: PageProps) {
 
   const { data: product } = await supabase
     .from('products')
-    .select('*, product_media(*)')
+    .select('*, category:categories(*), product_media(*)')
     .eq('id', productId)
     .single<Product & { product_media: ProductMedia[] }>()
 
   if (!product) notFound()
+
+  const { data: categories } = await supabase
+    .from('categories')
+    .select('*')
+    .eq('store_id', store.id)
+    .order('name')
 
   return (
     <div className="flex flex-col gap-6">
@@ -41,7 +47,12 @@ export default async function EditarProductoPage({ params }: PageProps) {
           Editar — {product.name}
         </h1>
       </div>
-      <ProductForm store={store} storeSlug={storeSlug} product={product} />
+      <ProductForm
+        store={store}
+        storeSlug={storeSlug}
+        product={product}
+        initialCategories={(categories ?? []) as Category[]}
+      />
     </div>
   )
 }

@@ -24,7 +24,7 @@ export default function ProductPage({
     const supabase = createClient()
     supabase
       .from('products')
-      .select('*, store:stores(*), product_media(*)')
+      .select('*, store:stores(*), category:categories(*), product_media(*)')
       .eq('id', productId)
       .eq('sold', false)
       .single()
@@ -132,7 +132,7 @@ export default function ProductPage({
         {product.category && (
           <div className="px-5 py-3.5 flex items-center justify-between border-b border-[#F0EBED]">
             <span className="text-sm text-[--text-muted]">Categoría</span>
-            <span className="text-sm font-semibold text-[--text]">{product.category}</span>
+            <span className="text-sm font-semibold text-[--text]">{product.category.name}</span>
           </div>
         )}
 

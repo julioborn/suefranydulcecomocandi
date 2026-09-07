@@ -26,7 +26,7 @@ export default async function StorePage({ params }: PageProps) {
 
   const { data: products } = await supabase
     .from('products')
-    .select('*, product_media(*)')
+    .select('*, category:categories(*), product_media(*)')
     .eq('store_id', store.id)
     .eq('sold', false)
     .order('created_at', { ascending: false })
@@ -36,7 +36,7 @@ export default async function StorePage({ params }: PageProps) {
   const categoryOrder: string[] = []
   const productsByCategory: Record<string, typeof productList> = {}
   for (const product of productList) {
-    const key = product.category?.trim() || 'Otros'
+    const key = product.category?.name?.trim() || 'Otros'
     if (!productsByCategory[key]) {
       categoryOrder.push(key)
       productsByCategory[key] = []

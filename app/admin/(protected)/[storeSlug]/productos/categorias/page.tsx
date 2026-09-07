@@ -2,13 +2,13 @@ import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import type { Store, Category } from '@/types'
-import ProductForm from '@/components/ProductForm'
+import CategoryManager from '@/components/CategoryManager'
 
 interface PageProps {
   params: Promise<{ storeSlug: string }>
 }
 
-export default async function NuevoProductoPage({ params }: PageProps) {
+export default async function CategoriasPage({ params }: PageProps) {
   const { storeSlug } = await params
   const supabase = await createClient()
 
@@ -29,17 +29,15 @@ export default async function NuevoProductoPage({ params }: PageProps) {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <Link
-          href={`/admin/${storeSlug}/productos`}
-          className="text-xs text-gray-400 hover:text-[#e8427a]"
-        >
+        <Link href={`/admin/${storeSlug}/productos`} className="text-xs text-gray-400 hover:text-[#e8427a]">
           ← Productos
         </Link>
         <h1 className="text-xl font-semibold text-gray-800 mt-1">
-          Nuevo producto — {store.name}
+          Categorías — {store.name}
         </h1>
       </div>
-      <ProductForm store={store} storeSlug={storeSlug} initialCategories={(categories ?? []) as Category[]} />
+
+      <CategoryManager store={store} initialCategories={(categories ?? []) as Category[]} />
     </div>
   )
 }

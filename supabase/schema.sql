@@ -13,6 +13,15 @@ create table if not exists stores (
   created_at timestamptz default now()
 );
 
+-- Categorías (propias de cada tienda)
+create table if not exists categories (
+  id uuid primary key default gen_random_uuid(),
+  store_id uuid references stores(id) on delete cascade not null,
+  name text not null,
+  created_at timestamptz default now(),
+  unique (store_id, name)
+);
+
 -- Productos
 create table if not exists products (
   id uuid primary key default gen_random_uuid(),
@@ -25,7 +34,7 @@ create table if not exists products (
   sold_at timestamptz,
   talle text,
   colores text[],
-  category text,
+  category_id uuid references categories(id) on delete set null,
   created_by uuid references auth.users(id),
   created_at timestamptz default now(),
   updated_at timestamptz default now()
@@ -59,6 +68,7 @@ create trigger products_updated_at
 -- ============================================================
 
 alter table stores enable row level security;
+alter table categories enable row level security;
 alter table products enable row level security;
 alter table product_media enable row level security;
 
@@ -67,6 +77,13 @@ create policy "stores_public_read" on stores
   for select using (true);
 
 create policy "stores_auth_write" on stores
+  for all using (auth.uid() is not null);
+
+-- categories: lectura pública, escritura solo autenticados
+create policy "categories_public_read" on categories
+  for select using (true);
+
+create policy "categories_auth_write" on categories
   for all using (auth.uid() is not null);
 
 -- products: lectura pública solo de no vendidos, escritura solo autenticados

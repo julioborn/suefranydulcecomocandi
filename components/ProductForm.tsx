@@ -4,20 +4,16 @@ import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { createClient } from '@/lib/supabase/client'
-import type { Product, Store, ProductMedia } from '@/types'
+import type { Product, Store, ProductMedia, Category } from '@/types'
 import { Upload, X, Plus } from 'lucide-react'
 
 const TALLES = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'Único']
-
-const CATEGORIAS_POR_RUBRO: Record<Store['category'], string[]> = {
-  accesorios: ['Aros', 'Collares', 'Pulseras', 'Anillos', 'Llaveros'],
-  ropa: ['Remeras', 'Vestidos', 'Pantalones', 'Camperas', 'Conjuntos'],
-}
 
 interface Props {
   store: Store
   storeSlug: string
   product?: Product & { product_media?: ProductMedia[] }
+  initialCategories: Category[]
 }
 
 const inputClass =
@@ -25,7 +21,7 @@ const inputClass =
 
 const labelClass = 'text-xs font-semibold text-[#c4a0b8] uppercase tracking-wider'
 
-export default function ProductForm({ store, storeSlug, product }: Props) {
+export default function ProductForm({ store, storeSlug, product, initialCategories }: Props) {
   const router = useRouter()
   const fileInputRef = useRef<HTMLInputElement>(null)
   const videoInputRef = useRef<HTMLInputElement>(null)
@@ -34,7 +30,12 @@ export default function ProductForm({ store, storeSlug, product }: Props) {
   const [description, setDescription] = useState(product?.description ?? '')
   const [price, setPrice] = useState(product?.price?.toString() ?? '')
   const [quantity, setQuantity] = useState(product?.quantity?.toString() ?? '1')
-  const [category, setCategory] = useState(product?.category ?? '')
+  const [categories, setCategories] = useState<Category[]>(
+    [...initialCategories].sort((a, b) => a.name.localeCompare(b.name))
+  )
+  const [categoryId, setCategoryId] = useState(product?.category_id ?? '')
+  const [newCategoryName, setNewCategoryName] = useState('')
+  const [addingCategory, setAddingCategory] = useState(false)
   const [talle, setTalle] = useState(product?.talle ?? '')
   const [colorInput, setColorInput] = useState('')
   const [colores, setColores] = useState<string[]>(product?.colores ?? [])
@@ -43,6 +44,24 @@ export default function ProductForm({ store, storeSlug, product }: Props) {
   const [newVideo, setNewVideo] = useState<File | null>(null)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
+
+  async function createCategory() {
+    const name = newCategoryName.trim()
+    if (!name) return
+    const supabase = createClient()
+    const { data, error } = await supabase
+      .from('categories')
+      .insert({ store_id: store.id, name })
+      .select()
+      .single()
+
+    if (!error && data) {
+      setCategories((prev) => [...prev, data].sort((a, b) => a.name.localeCompare(b.name)))
+      setCategoryId(data.id)
+      setNewCategoryName('')
+      setAddingCategory(false)
+    }
+  }
 
   function addColor() {
     const trimmed = colorInput.trim()
@@ -88,7 +107,7 @@ export default function ProductForm({ store, storeSlug, product }: Props) {
         description: description.trim() || null,
         price: parseFloat(price),
         quantity: parseInt(quantity, 10),
-        category: category || null,
+        category_id: categoryId || null,
         talle: store.category === 'ropa' ? (talle || null) : null,
         colores: store.category === 'ropa' ? (colores.length ? colores : null) : null,
         created_by: user?.id,
@@ -156,10 +175,41 @@ export default function ProductForm({ store, storeSlug, product }: Props) {
 
         <div className="flex flex-col gap-1.5">
           <label className={labelClass}>Categoría</label>
-          <select value={category} onChange={(e) => setCategory(e.target.value)} className={inputClass}>
-            <option value="">Sin categoría</option>
-            {CATEGORIAS_POR_RUBRO[store.category].map((c) => <option key={c} value={c}>{c}</option>)}
-          </select>
+          {addingCategory ? (
+            <div className="flex gap-2">
+              <input
+                autoFocus
+                value={newCategoryName}
+                onChange={(e) => setNewCategoryName(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') { e.preventDefault(); createCategory() }
+                  if (e.key === 'Escape') setAddingCategory(false)
+                }}
+                placeholder="Nombre de la categoría"
+                className={`${inputClass} flex-1`}
+              />
+              <button type="button" onClick={createCategory}
+                className="p-3 rounded-xl bg-pink-50 text-pink-400 hover:bg-pink-100 border border-pink-100 transition-colors">
+                <Plus className="w-5 h-5" />
+              </button>
+              <button type="button" onClick={() => setAddingCategory(false)}
+                className="p-3 rounded-xl text-[#c4a0b8] hover:bg-pink-50 border border-pink-100 transition-colors">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+          ) : (
+            <div className="flex gap-2">
+              <select value={categoryId} onChange={(e) => setCategoryId(e.target.value)} className={`${inputClass} flex-1`}>
+                <option value="">Sin categoría</option>
+                {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+              </select>
+              <button type="button" onClick={() => setAddingCategory(true)}
+                title="Nueva categoría"
+                className="p-3 rounded-xl bg-pink-50 text-pink-400 hover:bg-pink-100 border border-pink-100 transition-colors">
+                <Plus className="w-5 h-5" />
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="flex gap-3">
