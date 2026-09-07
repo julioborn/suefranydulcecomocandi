@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import type { Store, Product, ProductMedia, Category } from '@/types'
+import type { Store, Product, ProductMedia, Category, Color } from '@/types'
 import ProductForm from '@/components/ProductForm'
 
 interface PageProps {
@@ -20,16 +20,30 @@ export default async function EditarProductoPage({ params }: PageProps) {
 
   if (!store) notFound()
 
-  const { data: product } = await supabase
+  const { data: productRow } = await supabase
     .from('products')
-    .select('*, category:categories(*), product_media(*)')
+    .select('*, category:categories(*), product_colors(color:colors(*)), product_media(*)')
     .eq('id', productId)
-    .single<Product & { product_media: ProductMedia[] }>()
+    .single()
 
-  if (!product) notFound()
+  if (!productRow) notFound()
+
+  const { product_colors, ...rest } = productRow as typeof productRow & {
+    product_colors: { color: Color }[]
+  }
+  const product = {
+    ...rest,
+    colors: product_colors.map((pc: { color: Color }) => pc.color),
+  } as Product & { product_media: ProductMedia[]; colors: Color[] }
 
   const { data: categories } = await supabase
     .from('categories')
+    .select('*')
+    .eq('store_id', store.id)
+    .order('name')
+
+  const { data: colors } = await supabase
+    .from('colors')
     .select('*')
     .eq('store_id', store.id)
     .order('name')
@@ -52,6 +66,7 @@ export default async function EditarProductoPage({ params }: PageProps) {
         storeSlug={storeSlug}
         product={product}
         initialCategories={(categories ?? []) as Category[]}
+        initialColors={(colors ?? []) as Color[]}
       />
     </div>
   )

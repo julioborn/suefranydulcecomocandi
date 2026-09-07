@@ -22,6 +22,15 @@ create table if not exists categories (
   unique (store_id, name)
 );
 
+-- Colores (propios de cada tienda)
+create table if not exists colors (
+  id uuid primary key default gen_random_uuid(),
+  store_id uuid references stores(id) on delete cascade not null,
+  name text not null,
+  created_at timestamptz default now(),
+  unique (store_id, name)
+);
+
 -- Productos
 create table if not exists products (
   id uuid primary key default gen_random_uuid(),
@@ -33,11 +42,17 @@ create table if not exists products (
   sold boolean not null default false,
   sold_at timestamptz,
   talle text,
-  colores text[],
   category_id uuid references categories(id) on delete set null,
   created_by uuid references auth.users(id),
   created_at timestamptz default now(),
   updated_at timestamptz default now()
+);
+
+-- Colores de cada producto (muchos a muchos)
+create table if not exists product_colors (
+  product_id uuid references products(id) on delete cascade not null,
+  color_id uuid references colors(id) on delete cascade not null,
+  primary key (product_id, color_id)
 );
 
 -- Medios del producto (imágenes y videos)
@@ -69,7 +84,9 @@ create trigger products_updated_at
 
 alter table stores enable row level security;
 alter table categories enable row level security;
+alter table colors enable row level security;
 alter table products enable row level security;
+alter table product_colors enable row level security;
 alter table product_media enable row level security;
 
 -- stores: lectura pública, escritura solo autenticados
@@ -86,11 +103,25 @@ create policy "categories_public_read" on categories
 create policy "categories_auth_write" on categories
   for all using (auth.uid() is not null);
 
+-- colors: lectura pública, escritura solo autenticados
+create policy "colors_public_read" on colors
+  for select using (true);
+
+create policy "colors_auth_write" on colors
+  for all using (auth.uid() is not null);
+
 -- products: lectura pública solo de no vendidos, escritura solo autenticados
 create policy "products_public_read" on products
   for select using (true);
 
 create policy "products_auth_write" on products
+  for all using (auth.uid() is not null);
+
+-- product_colors: lectura pública, escritura solo autenticados
+create policy "product_colors_public_read" on product_colors
+  for select using (true);
+
+create policy "product_colors_auth_write" on product_colors
   for all using (auth.uid() is not null);
 
 -- product_media: lectura pública, escritura solo autenticados

@@ -4,7 +4,7 @@ import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { createClient } from '@/lib/supabase/client'
-import type { Product, Store, ProductMedia, Category } from '@/types'
+import type { Product, Store, ProductMedia, Category, Color } from '@/types'
 import { Upload, X, Plus } from 'lucide-react'
 
 const TALLES = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'Único']
@@ -12,8 +12,9 @@ const TALLES = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'Único']
 interface Props {
   store: Store
   storeSlug: string
-  product?: Product & { product_media?: ProductMedia[] }
+  product?: Product & { product_media?: ProductMedia[]; colors?: Color[] }
   initialCategories: Category[]
+  initialColors: Color[]
 }
 
 const inputClass =
@@ -21,7 +22,7 @@ const inputClass =
 
 const labelClass = 'text-xs font-semibold text-[#c4a0b8] uppercase tracking-wider'
 
-export default function ProductForm({ store, storeSlug, product, initialCategories }: Props) {
+export default function ProductForm({ store, storeSlug, product, initialCategories, initialColors }: Props) {
   const router = useRouter()
   const fileInputRef = useRef<HTMLInputElement>(null)
   const videoInputRef = useRef<HTMLInputElement>(null)
@@ -37,8 +38,14 @@ export default function ProductForm({ store, storeSlug, product, initialCategori
   const [newCategoryName, setNewCategoryName] = useState('')
   const [addingCategory, setAddingCategory] = useState(false)
   const [talle, setTalle] = useState(product?.talle ?? '')
-  const [colorInput, setColorInput] = useState('')
-  const [colores, setColores] = useState<string[]>(product?.colores ?? [])
+  const [colors, setColors] = useState<Color[]>(
+    [...initialColors].sort((a, b) => a.name.localeCompare(b.name))
+  )
+  const [selectedColorIds, setSelectedColorIds] = useState<string[]>(
+    product?.colors?.map((c) => c.id) ?? []
+  )
+  const [newColorName, setNewColorName] = useState('')
+  const [addingColor, setAddingColor] = useState(false)
   const [existingMedia, setExistingMedia] = useState<ProductMedia[]>(product?.product_media ?? [])
   const [newImages, setNewImages] = useState<File[]>([])
   const [newVideo, setNewVideo] = useState<File | null>(null)
@@ -63,10 +70,26 @@ export default function ProductForm({ store, storeSlug, product, initialCategori
     }
   }
 
-  function addColor() {
-    const trimmed = colorInput.trim()
-    if (trimmed && !colores.includes(trimmed)) setColores((prev) => [...prev, trimmed])
-    setColorInput('')
+  async function createColor() {
+    const name = newColorName.trim()
+    if (!name) return
+    const supabase = createClient()
+    const { data, error } = await supabase
+      .from('colors')
+      .insert({ store_id: store.id, name })
+      .select()
+      .single()
+
+    if (!error && data) {
+      setColors((prev) => [...prev, data].sort((a, b) => a.name.localeCompare(b.name)))
+      setSelectedColorIds((prev) => [...prev, data.id])
+      setNewColorName('')
+      setAddingColor(false)
+    }
+  }
+
+  function toggleColor(id: string) {
+    setSelectedColorIds((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]))
   }
 
   function handleImageFiles(files: FileList | null) {
@@ -109,7 +132,6 @@ export default function ProductForm({ store, storeSlug, product, initialCategori
         quantity: parseInt(quantity, 10),
         category_id: categoryId || null,
         talle: store.category === 'ropa' ? (talle || null) : null,
-        colores: store.category === 'ropa' ? (colores.length ? colores : null) : null,
         created_by: user?.id,
       }
 
@@ -118,10 +140,17 @@ export default function ProductForm({ store, storeSlug, product, initialCategori
       if (productId) {
         const { error } = await supabase.from('products').update(payload).eq('id', productId)
         if (error) throw error
+        await supabase.from('product_colors').delete().eq('product_id', productId)
       } else {
         const { data, error } = await supabase.from('products').insert(payload).select().single()
         if (error) throw error
         productId = data.id
+      }
+
+      if (store.category === 'ropa' && selectedColorIds.length) {
+        await supabase.from('product_colors').insert(
+          selectedColorIds.map((colorId) => ({ product_id: productId, color_id: colorId }))
+        )
       }
 
       for (let i = 0; i < newImages.length; i++) {
@@ -250,31 +279,57 @@ export default function ProductForm({ store, storeSlug, product, initialCategori
 
           <div className="flex flex-col gap-2">
             <label className={labelClass}>Colores</label>
-            <div className="flex gap-2">
-              <input
-                value={colorInput}
-                onChange={(e) => setColorInput(e.target.value)}
-                onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addColor() } }}
-                className={`${inputClass} flex-1`}
-                placeholder="Ej: Rosa, Blanco..."
-              />
-              <button type="button" onClick={addColor}
-                className="p-3 rounded-xl bg-pink-50 text-pink-400 hover:bg-pink-100 border border-pink-100 transition-colors">
-                <Plus className="w-5 h-5" />
-              </button>
-            </div>
-            {colores.length > 0 && (
+
+            {colors.length > 0 && (
               <div className="flex flex-wrap gap-2">
-                {colores.map((c) => (
-                  <span key={c}
-                    className="flex items-center gap-1.5 bg-pink-50 text-pink-500 border border-pink-100 text-sm px-3 py-1 rounded-full">
-                    {c}
-                    <button type="button" onClick={() => setColores((prev) => prev.filter((x) => x !== c))}>
-                      <X className="w-3.5 h-3.5" />
+                {colors.map((c) => {
+                  const active = selectedColorIds.includes(c.id)
+                  return (
+                    <button
+                      key={c.id}
+                      type="button"
+                      onClick={() => toggleColor(c.id)}
+                      className={`text-sm px-3 py-1.5 rounded-full border transition-colors ${
+                        active
+                          ? 'bg-pink-400 border-pink-400 text-white font-medium'
+                          : 'bg-pink-50/30 border-pink-100 text-[#c4a0b8] hover:border-pink-300'
+                      }`}
+                    >
+                      {c.name}
                     </button>
-                  </span>
-                ))}
+                  )
+                })}
               </div>
+            )}
+
+            {addingColor ? (
+              <div className="flex gap-2">
+                <input
+                  autoFocus
+                  value={newColorName}
+                  onChange={(e) => setNewColorName(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') { e.preventDefault(); createColor() }
+                    if (e.key === 'Escape') setAddingColor(false)
+                  }}
+                  placeholder="Nombre del color"
+                  className={`${inputClass} flex-1`}
+                />
+                <button type="button" onClick={createColor}
+                  className="p-3 rounded-xl bg-pink-50 text-pink-400 hover:bg-pink-100 border border-pink-100 transition-colors">
+                  <Plus className="w-5 h-5" />
+                </button>
+                <button type="button" onClick={() => setAddingColor(false)}
+                  className="p-3 rounded-xl text-[#c4a0b8] hover:bg-pink-50 border border-pink-100 transition-colors">
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+            ) : (
+              <button type="button" onClick={() => setAddingColor(true)}
+                className="flex items-center gap-1.5 self-start text-sm text-pink-400 hover:text-pink-500 transition-colors">
+                <Plus className="w-4 h-4" />
+                Nuevo color
+              </button>
             )}
           </div>
         </div>

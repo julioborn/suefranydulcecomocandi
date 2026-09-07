@@ -17,6 +17,13 @@ export interface Category {
   created_at: string
 }
 
+export interface Color {
+  id: string
+  store_id: string
+  name: string
+  created_at: string
+}
+
 export interface Product {
   id: string
   store_id: string
@@ -27,13 +34,13 @@ export interface Product {
   sold: boolean
   sold_at: string | null
   talle: string | null
-  colores: string[] | null
   category_id: string | null
   created_by: string | null
   created_at: string
   updated_at: string
   store?: Store
   category?: Category | null
+  colors?: Color[]
   product_media?: ProductMedia[]
 }
 

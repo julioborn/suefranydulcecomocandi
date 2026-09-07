@@ -33,19 +33,26 @@ export default async function ProductosPage({ params }: PageProps) {
           <Link href="/admin" className="text-xs text-gray-400 hover:text-[#e8427a]">← Dashboard</Link>
           <h1 className="text-xl font-semibold text-gray-800 mt-1">{store.name} — Productos</h1>
         </div>
+        <Link
+          href={`/admin/${storeSlug}/productos/nuevo`}
+          className="btn-primary text-center text-sm py-3"
+        >
+          + Nuevo producto
+        </Link>
         <div className="flex gap-2">
-          <Link
-            href={`/admin/${storeSlug}/productos/nuevo`}
-            className="btn-primary flex-1 text-center text-sm py-3"
-          >
-            + Nuevo producto
-          </Link>
           <Link
             href={`/admin/${storeSlug}/productos/categorias`}
             className="flex-1 text-center text-sm py-3 rounded-xl border border-pink-100 text-[#831843]
                        bg-pink-50/40 hover:bg-pink-50 transition-colors"
           >
             Categorías
+          </Link>
+          <Link
+            href={`/admin/${storeSlug}/productos/colores`}
+            className="flex-1 text-center text-sm py-3 rounded-xl border border-pink-100 text-[#831843]
+                       bg-pink-50/40 hover:bg-pink-50 transition-colors"
+          >
+            Colores
           </Link>
         </div>
       </div>

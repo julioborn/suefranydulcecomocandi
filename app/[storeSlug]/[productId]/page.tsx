@@ -5,10 +5,10 @@ import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState, use } from 'react'
-import type { Product, Store, ProductMedia } from '@/types'
+import type { Product, Store, ProductMedia, Color } from '@/types'
 import { MessageCircle, ChevronLeft, ChevronRight } from 'lucide-react'
 
-type FullProduct = Product & { store: Store; product_media: ProductMedia[] }
+type FullProduct = Product & { store: Store; product_media: ProductMedia[]; colors: Color[] }
 
 export default function ProductPage({
   params,
@@ -24,12 +24,17 @@ export default function ProductPage({
     const supabase = createClient()
     supabase
       .from('products')
-      .select('*, store:stores(*), category:categories(*), product_media(*)')
+      .select('*, store:stores(*), category:categories(*), product_colors(color:colors(*)), product_media(*)')
       .eq('id', productId)
       .eq('sold', false)
       .single()
       .then(({ data }) => {
-        setProduct(data ? (data as FullProduct) : null)
+        if (!data) {
+          setProduct(null)
+        } else {
+          const { product_colors, ...rest } = data as typeof data & { product_colors: { color: Color }[] }
+          setProduct({ ...rest, colors: product_colors.map((pc: { color: Color }) => pc.color) } as FullProduct)
+        }
         setLoading(false)
       })
   }, [productId])
@@ -143,10 +148,12 @@ export default function ProductPage({
           </div>
         )}
 
-        {product.colores && product.colores.length > 0 && (
+        {product.colors && product.colors.length > 0 && (
           <div className="px-5 py-3.5 flex items-center justify-between border-b border-[#F0EBED]">
             <span className="text-sm text-[--text-muted]">Color</span>
-            <span className="text-sm font-semibold text-[--text]">{product.colores.join(', ')}</span>
+            <span className="text-sm font-semibold text-[--text]">
+              {product.colors.map((c) => c.name).join(', ')}
+            </span>
           </div>
         )}
 
