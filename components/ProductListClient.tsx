@@ -43,6 +43,16 @@ export default function ProductListClient({ initialProducts, store, storeSlug }:
   async function deleteProduct(product: FullProduct) {
     if (!confirm(`¿Eliminar "${product.name}"? Esta acción no se puede deshacer.`)) return
     const supabase = createClient()
+
+    // Remove files from Storage before deleting the product
+    if (product.product_media?.length) {
+      const paths = product.product_media.map((m) => {
+        const url = new URL(m.url)
+        return url.pathname.replace('/storage/v1/object/public/product-media/', '')
+      })
+      await supabase.storage.from('product-media').remove(paths)
+    }
+
     const { error } = await supabase.from('products').delete().eq('id', product.id)
     if (!error) setProducts((prev) => prev.filter((p) => p.id !== product.id))
   }

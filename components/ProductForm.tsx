@@ -60,6 +60,9 @@ export default function ProductForm({ store, storeSlug, product }: Props) {
 
   async function removeExistingMedia(media: ProductMedia) {
     const supabase = createClient()
+    const url = new URL(media.url)
+    const path = url.pathname.replace('/storage/v1/object/public/product-media/', '')
+    await supabase.storage.from('product-media').remove([path])
     await supabase.from('product_media').delete().eq('id', media.id)
     setExistingMedia((prev) => prev.filter((m) => m.id !== media.id))
   }
