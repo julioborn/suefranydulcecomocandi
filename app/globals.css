@@ -57,3 +57,27 @@ input, textarea, select {
 .card:hover {
   box-shadow: var(--shadow-hover);
 }
+
+/* Catálogo de tienda: transición al cambiar de categoría */
+@keyframes catalog-in {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-catalog-in {
+  animation: catalog-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(6px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.animate-card-in {
+  animation: card-in 0.35s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-catalog-in,
+  .animate-card-in {
+    animation: none;
+  }
+}
