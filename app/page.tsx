@@ -9,7 +9,7 @@ export default async function HomePage() {
 
   return (
     <main className="flex flex-col min-h-screen bg-[#FAF8F6]">
-      <div className="flex flex-col items-center justify-center flex-1 px-6 py-12 gap-10">
+      <div className="flex flex-col items-center justify-center flex-1 px-5 py-12 gap-10">
 
         {/* Encabezado */}
         <div className="text-center">
@@ -21,33 +21,41 @@ export default async function HomePage() {
           </h1>
         </div>
 
-        {/* Cards */}
-        <div className="flex flex-row gap-4 w-full max-w-xs mx-auto">
+        {/* Cards con toldito */}
+        <div className="flex flex-row gap-4 w-full max-w-sm mx-auto">
+          {/* Suefran */}
           <Link
             href="/suefran"
-            className="group flex-1 flex flex-col items-center gap-3 bg-white rounded-2xl p-5
+            className="group flex-1 flex flex-col bg-white rounded-2xl overflow-hidden
                        shadow-[var(--shadow)] hover:shadow-[var(--shadow-hover)] transition-shadow duration-200"
           >
-            <div className="relative w-full aspect-square rounded-xl overflow-hidden bg-[--bg-subtle]">
-              <Image src="/logos/suefran.jpg" alt="Suefran" fill className="object-contain p-2 group-hover:scale-105 transition-transform duration-300" />
-            </div>
-            <div className="text-center">
-              <p className="font-serif text-base text-[--text]">Suefran</p>
-              <p className="text-xs text-[--text-muted] mt-0.5">Accesorios</p>
+            <div className="card-awning" />
+            <div className="flex flex-col items-center gap-3 p-5 pt-8">
+              <div className="relative w-full aspect-square rounded-xl overflow-hidden bg-[--bg-subtle]">
+                <Image src="/logos/suefran.jpg" alt="Suefran" fill className="object-contain p-2 group-hover:scale-105 transition-transform duration-300" />
+              </div>
+              <div className="text-center">
+                <p className="font-serif text-lg text-[--text]">Suefran</p>
+                <p className="text-xs text-[--text-muted] mt-0.5">Accesorios</p>
+              </div>
             </div>
           </Link>
 
+          {/* Dulce Como Candi */}
           <Link
             href="/dulce-como-candi"
-            className="group flex-1 flex flex-col items-center gap-3 bg-white rounded-2xl p-5
+            className="group flex-1 flex flex-col bg-white rounded-2xl overflow-hidden
                        shadow-[var(--shadow)] hover:shadow-[var(--shadow-hover)] transition-shadow duration-200"
           >
-            <div className="relative w-full aspect-square rounded-xl overflow-hidden bg-[--bg-subtle]">
-              <Image src="/logos/dulcecomocandi.png" alt="Dulce Como Candi" fill className="object-contain p-2 group-hover:scale-105 transition-transform duration-300" />
-            </div>
-            <div className="text-center">
-              <p className="font-serif text-base text-[--text]">Dulce Como Candi</p>
-              <p className="text-xs text-[--text-muted] mt-0.5">Ropa</p>
+            <div className="card-awning" />
+            <div className="flex flex-col items-center gap-3 p-5 pt-8">
+              <div className="relative w-full aspect-square rounded-xl overflow-hidden bg-[--bg-subtle]">
+                <Image src="/logos/dulcecomocandi.png" alt="Dulce Como Candi" fill className="object-contain p-2 group-hover:scale-105 transition-transform duration-300" />
+              </div>
+              <div className="text-center">
+                <p className="font-serif text-lg text-[--text]">Dulce Como Candi</p>
+                <p className="text-xs text-[--text-muted] mt-0.5">Ropa</p>
+              </div>
             </div>
           </Link>
         </div>
@@ -65,7 +73,7 @@ export default async function HomePage() {
         )}
       </div>
 
-      <footer className="py-6 px-4 text-center border-t border-[--border]">
+      <footer className="py-6 px-4 text-center border-t border-[#EDE7EB]">
         <a
           href="https://maps.google.com/?q=Roque+Sáenz+Peña+1054,+Calchaquí,+Santa+Fe"
           target="_blank"
