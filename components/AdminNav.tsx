@@ -20,13 +20,8 @@ export default function AdminNav({ userEmail, userName }: { userEmail: string; u
     <header className="bg-white/90 backdrop-blur-md border-b border-pink-100 px-4 py-3
                        shadow-[0_1px_8px_rgba(244,114,182,0.08)]">
       <div className="max-w-5xl mx-auto flex items-center gap-3">
-        <div className="flex gap-2 items-center">
-          <div className="relative w-8 h-8">
-            <Image src="/logos/suefran.png" alt="Suefran" fill className="object-contain" />
-          </div>
-          <div className="relative w-8 h-8">
-            <Image src="/logos/dulcecomocandi.png" alt="Dulce Como Candi" fill className="object-contain" />
-          </div>
+        <div className="relative w-9 h-9">
+          <Image src="/logos/sdc.JPG" alt="SDC" fill className="object-contain rounded-lg" />
         </div>
 
         <Link

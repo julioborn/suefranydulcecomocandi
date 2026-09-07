@@ -28,14 +28,14 @@ export default async function ProductosPage({ params }: PageProps) {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3">
         <div>
           <Link href="/admin" className="text-xs text-gray-400 hover:text-[#e8427a]">← Dashboard</Link>
           <h1 className="text-xl font-semibold text-gray-800 mt-1">{store.name} — Productos</h1>
         </div>
         <Link
           href={`/admin/${storeSlug}/productos/nuevo`}
-          className="bg-[#e8427a] hover:bg-[#d63570] text-white text-sm font-medium px-4 py-2.5 rounded-xl transition-colors"
+          className="btn-primary text-center text-sm py-3"
         >
           + Nuevo producto
         </Link>
