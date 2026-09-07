@@ -62,12 +62,14 @@ export default function LoginPage() {
             <input
               type="text"
               value={usuario}
-              onChange={(e) => setUsuario(e.target.value)}
+              onChange={(e) => setUsuario(e.target.value.toLowerCase())}
               required
               autoComplete="username"
-              placeholder="victoria, lucia o emilia"
+              autoCapitalize="none"
+              autoCorrect="off"
+              spellCheck={false}
               className="border border-[--border] bg-white rounded-xl px-4 py-3 text-[--text]
-                         placeholder:text-[--text-muted] focus:outline-none focus:border-[--accent]
+                         focus:outline-none focus:border-[--accent]
                          transition-colors"
             />
           </div>
