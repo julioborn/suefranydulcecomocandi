@@ -61,7 +61,7 @@ export default function StoreCatalog({ store, storeSlug, categoryOrder, products
         </div>
 
         {categoryOrder.length > 1 && !isSearching && (
-          <div className="flex gap-2 max-w-4xl mx-auto w-fit overflow-x-auto">
+          <div className="flex gap-2 max-w-4xl mx-auto w-full overflow-x-auto scrollbar-none">
             {[TODOS, ...categoryOrder].map((cat) => {
               const active = cat === selected
               return (
