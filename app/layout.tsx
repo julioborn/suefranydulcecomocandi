@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Geist } from 'next/font/google'
+import PullToRefresh from '@/components/PullToRefresh'
 import './globals.css'
 
 const geist = Geist({
@@ -32,7 +33,9 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es" className={`${geist.variable} h-full`}>
-      <body className="min-h-full flex flex-col bg-[#fdf4f7]">{children}</body>
+      <body className="min-h-full flex flex-col bg-[#fdf4f7]">
+        <PullToRefresh>{children}</PullToRefresh>
+      </body>
     </html>
   )
 }

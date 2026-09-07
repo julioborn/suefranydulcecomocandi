@@ -1,10 +1,14 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { MapPin } from 'lucide-react'
+import HiddenAdminAccess from '@/components/HiddenAdminAccess'
 
 export default function HomePage() {
   return (
     <main className="flex flex-col min-h-screen page-gradient">
+      <HiddenAdminAccess />
+      {/* Toldo de tienda */}
+      <div className="shop-awning" />
       {/* Círculos decorativos de fondo */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-pink-200/30 blur-3xl" />
