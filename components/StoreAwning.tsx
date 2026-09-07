@@ -18,6 +18,11 @@ export default function StoreAwning({ className }: { className?: string }) {
       className={className}
       aria-hidden="true"
     >
+      <defs>
+        <filter id="awning-soft-edge" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="3" />
+        </filter>
+      </defs>
       {COLORS.map((color, i) => {
         const x0 = i * STRIPE_WIDTH
         const x1 = x0 + STRIPE_WIDTH
@@ -35,12 +40,13 @@ export default function StoreAwning({ className }: { className?: string }) {
         return (
           <path
             key={`edge-${i}`}
-            d={`M ${x1} ${CANOPY_HEIGHT} A ${SCALLOP_RADIUS} ${SCALLOP_RADIUS} 0 0 1 ${x0} ${CANOPY_HEIGHT}`}
+            d={`M ${x0} 0 V ${CANOPY_HEIGHT} A ${SCALLOP_RADIUS} ${SCALLOP_RADIUS} 0 0 0 ${x1} ${CANOPY_HEIGHT} V 0`}
             fill="none"
-            stroke="rgba(0,0,0,0.14)"
+            stroke="rgba(0,0,0,0.08)"
             strokeWidth={2}
             strokeLinecap="round"
             vectorEffect="non-scaling-stroke"
+            filter="url(#awning-soft-edge)"
           />
         )
       })}
