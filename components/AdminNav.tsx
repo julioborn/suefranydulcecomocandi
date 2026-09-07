@@ -22,7 +22,7 @@ export default function AdminNav({ userEmail, userName }: { userEmail: string; u
       <div className="max-w-5xl mx-auto flex items-center gap-3">
         <div className="flex gap-2 items-center">
           <div className="relative w-8 h-8">
-            <Image src="/logos/suefran.jpg" alt="Suefran" fill className="object-contain" />
+            <Image src="/logos/suefran.png" alt="Suefran" fill className="object-contain" />
           </div>
           <div className="relative w-8 h-8">
             <Image src="/logos/dulcecomocandi.png" alt="Dulce Como Candi" fill className="object-contain" />
