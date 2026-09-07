@@ -25,6 +25,7 @@ create table if not exists products (
   sold_at timestamptz,
   talle text,
   colores text[],
+  category text,
   created_by uuid references auth.users(id),
   created_at timestamptz default now(),
   updated_at timestamptz default now()

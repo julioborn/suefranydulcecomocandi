@@ -129,6 +129,13 @@ export default function ProductPage({
           </div>
         )}
 
+        {product.category && (
+          <div className="px-5 py-3.5 flex items-center justify-between border-b border-[#F0EBED]">
+            <span className="text-sm text-[--text-muted]">Categoría</span>
+            <span className="text-sm font-semibold text-[--text]">{product.category}</span>
+          </div>
+        )}
+
         {product.talle && (
           <div className="px-5 py-3.5 flex items-center justify-between border-b border-[#F0EBED]">
             <span className="text-sm text-[--text-muted]">Talle</span>

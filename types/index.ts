@@ -21,6 +21,7 @@ export interface Product {
   sold_at: string | null
   talle: string | null
   colores: string[] | null
+  category: string | null
   created_by: string | null
   created_at: string
   updated_at: string

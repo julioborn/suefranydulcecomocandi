@@ -118,6 +118,11 @@ export default function ProductListClient({ initialProducts, store, storeSlug }:
                     ${Number(product.price).toLocaleString('es-AR')}
                   </p>
                   <div className="flex gap-2 mt-0.5 flex-wrap">
+                    {product.category && (
+                      <span className="text-[10px] bg-pink-50 text-pink-400 border border-pink-100 px-2 py-0.5 rounded-full">
+                        {product.category}
+                      </span>
+                    )}
                     {store.category === 'ropa' && product.talle && (
                       <span className="text-[10px] bg-pink-50 text-pink-400 border border-pink-100 px-2 py-0.5 rounded-full">
                         Talle {product.talle}

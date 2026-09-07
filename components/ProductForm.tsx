@@ -9,6 +9,11 @@ import { Upload, X, Plus } from 'lucide-react'
 
 const TALLES = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'Único']
 
+const CATEGORIAS_POR_RUBRO: Record<Store['category'], string[]> = {
+  accesorios: ['Aros', 'Collares', 'Pulseras', 'Anillos', 'Llaveros'],
+  ropa: ['Remeras', 'Vestidos', 'Pantalones', 'Camperas', 'Conjuntos'],
+}
+
 interface Props {
   store: Store
   storeSlug: string
@@ -29,6 +34,7 @@ export default function ProductForm({ store, storeSlug, product }: Props) {
   const [description, setDescription] = useState(product?.description ?? '')
   const [price, setPrice] = useState(product?.price?.toString() ?? '')
   const [quantity, setQuantity] = useState(product?.quantity?.toString() ?? '1')
+  const [category, setCategory] = useState(product?.category ?? '')
   const [talle, setTalle] = useState(product?.talle ?? '')
   const [colorInput, setColorInput] = useState('')
   const [colores, setColores] = useState<string[]>(product?.colores ?? [])
@@ -82,6 +88,7 @@ export default function ProductForm({ store, storeSlug, product }: Props) {
         description: description.trim() || null,
         price: parseFloat(price),
         quantity: parseInt(quantity, 10),
+        category: category || null,
         talle: store.category === 'ropa' ? (talle || null) : null,
         colores: store.category === 'ropa' ? (colores.length ? colores : null) : null,
         created_by: user?.id,
@@ -145,6 +152,14 @@ export default function ProductForm({ store, storeSlug, product }: Props) {
             className={`${inputClass} resize-none`}
             placeholder="Descripción opcional"
           />
+        </div>
+
+        <div className="flex flex-col gap-1.5">
+          <label className={labelClass}>Categoría</label>
+          <select value={category} onChange={(e) => setCategory(e.target.value)} className={inputClass}>
+            <option value="">Sin categoría</option>
+            {CATEGORIAS_POR_RUBRO[store.category].map((c) => <option key={c} value={c}>{c}</option>)}
+          </select>
         </div>
 
         <div className="flex gap-3">

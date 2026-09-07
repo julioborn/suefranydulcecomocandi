@@ -32,6 +32,21 @@ export default async function StorePage({ params }: PageProps) {
 
   const productList = (products ?? []) as (Product & { product_media: ProductMedia[] })[]
 
+  const categoryOrder: string[] = []
+  const productsByCategory = new Map<string, typeof productList>()
+  for (const product of productList) {
+    const key = product.category?.trim() || 'Otros'
+    if (!productsByCategory.has(key)) {
+      categoryOrder.push(key)
+      productsByCategory.set(key, [])
+    }
+    productsByCategory.get(key)!.push(product)
+  }
+  if (categoryOrder.includes('Otros')) {
+    categoryOrder.splice(categoryOrder.indexOf('Otros'), 1)
+    categoryOrder.push('Otros')
+  }
+
   return (
     <main className="flex flex-col min-h-screen bg-[#FAF8F6]">
       {/* Header */}
@@ -49,7 +64,25 @@ export default async function StorePage({ params }: PageProps) {
         </div>
       </header>
 
-      {/* Grilla */}
+      {/* Categorías */}
+      {categoryOrder.length > 1 && (
+        <nav className="sticky top-[49px] z-10 bg-[#FAF8F6]/90 backdrop-blur-md border-b border-[--border] px-4 py-2.5 overflow-x-auto">
+          <div className="flex gap-2 max-w-4xl mx-auto w-fit">
+            {categoryOrder.map((cat) => (
+              <a
+                key={cat}
+                href={`#cat-${cat}`}
+                className="flex-shrink-0 text-xs text-[--text-muted] bg-white border border-[--border]
+                           px-3.5 py-1.5 rounded-full hover:text-[--accent] hover:border-[--accent] transition-colors"
+              >
+                {cat}
+              </a>
+            ))}
+          </div>
+        </nav>
+      )}
+
+      {/* Grilla por categoría */}
       <section className="flex-1 px-4 py-6">
         {productList.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-32 gap-4">
@@ -57,40 +90,49 @@ export default async function StorePage({ params }: PageProps) {
             <p className="text-sm text-[--text-muted]">Volvé pronto a ver el catálogo</p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 max-w-4xl mx-auto">
-            {productList.map((product) => {
-              const cover = product.product_media?.find((m) => m.type === 'image')
-              return (
-                <Link
-                  key={product.id}
-                  href={`/${storeSlug}/${product.id}`}
-                  className="group bg-white rounded-xl overflow-hidden shadow-[var(--shadow)]
-                             hover:shadow-[var(--shadow-hover)] transition-shadow duration-200"
-                >
-                  <div className="relative aspect-square bg-[--bg-subtle]">
-                    {cover ? (
-                      <Image
-                        src={cover.url}
-                        alt={product.name}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-3xl text-[--border]">🛍️</div>
-                    )}
-                  </div>
-                  <div className="p-3 border-t border-[#F0EBEd]">
-                    <p className="text-sm text-[--text] font-medium truncate leading-snug">{product.name}</p>
-                    <p className="text-sm font-semibold text-[--accent] mt-0.5">
-                      ${product.price.toLocaleString('es-AR')}
-                    </p>
-                    {store.category === 'ropa' && product.talle && (
-                      <p className="text-xs text-[--text-muted] mt-0.5">Talle {product.talle}</p>
-                    )}
-                  </div>
-                </Link>
-              )
-            })}
+          <div className="max-w-4xl mx-auto flex flex-col gap-10">
+            {categoryOrder.map((cat) => (
+              <div key={cat} id={`cat-${cat}`} className="scroll-mt-24 flex flex-col gap-3">
+                <h2 className="text-xs tracking-[0.2em] text-[--text-muted] uppercase font-medium">
+                  {cat}
+                </h2>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                  {productsByCategory.get(cat)!.map((product) => {
+                    const cover = product.product_media?.find((m) => m.type === 'image')
+                    return (
+                      <Link
+                        key={product.id}
+                        href={`/${storeSlug}/${product.id}`}
+                        className="group bg-white rounded-xl overflow-hidden shadow-[var(--shadow)]
+                                   hover:shadow-[var(--shadow-hover)] transition-shadow duration-200"
+                      >
+                        <div className="relative aspect-square bg-[--bg-subtle]">
+                          {cover ? (
+                            <Image
+                              src={cover.url}
+                              alt={product.name}
+                              fill
+                              className="object-cover group-hover:scale-105 transition-transform duration-300"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center text-3xl text-[--border]">🛍️</div>
+                          )}
+                        </div>
+                        <div className="p-3 border-t border-[#F0EBEd]">
+                          <p className="text-sm text-[--text] font-medium truncate leading-snug">{product.name}</p>
+                          <p className="text-sm font-semibold text-[--accent] mt-0.5">
+                            ${product.price.toLocaleString('es-AR')}
+                          </p>
+                          {store.category === 'ropa' && product.talle && (
+                            <p className="text-xs text-[--text-muted] mt-0.5">Talle {product.talle}</p>
+                          )}
+                        </div>
+                      </Link>
+                    )
+                  })}
+                </div>
+              </div>
+            ))}
           </div>
         )}
       </section>
