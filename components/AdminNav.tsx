@@ -17,31 +17,30 @@ export default function AdminNav({ userEmail, userName }: { userEmail: string; u
   }
 
   return (
-    <header className="bg-white/90 backdrop-blur-md border-b border-pink-100 px-4 py-3
-                       shadow-[0_1px_8px_rgba(244,114,182,0.08)]">
+    <header className="bg-white border-b border-[--border] px-4 py-3">
       <div className="max-w-5xl mx-auto flex items-center gap-3">
-        <div className="relative w-9 h-9">
-          <Image src="/logos/sdc.JPG" alt="SDC" fill className="object-contain rounded-lg" />
+        <div className="relative w-8 h-8 rounded-lg overflow-hidden bg-[--bg-subtle]">
+          <Image src="/logos/sdc.JPG" alt="SDC" fill className="object-contain" />
         </div>
 
         <Link
           href="/admin"
-          className="font-bold text-[#831843] text-sm hover:text-pink-500 transition-colors"
+          className="font-serif text-base text-[--text] hover:text-[--accent] transition-colors"
         >
           Admin
         </Link>
 
         <div className="ml-auto flex items-center gap-3">
           {(userName ?? userEmail) && (
-            <span className="hidden sm:flex items-center gap-1.5 text-xs bg-pink-50 text-pink-400
-                             border border-pink-100 px-3 py-1 rounded-full font-medium">
+            <span className="hidden sm:block text-xs text-[--text-muted]">
               {userName ?? userEmail}
             </span>
           )}
           <button
             onClick={handleLogout}
-            className="flex items-center gap-1.5 text-sm text-[#c4a0b8] hover:text-pink-500
-                       hover:bg-pink-50 px-3 py-1.5 rounded-xl transition-all"
+            className="flex items-center gap-1.5 text-sm text-[--text-muted] hover:text-[--accent]
+                       px-3 py-1.5 rounded-lg border border-transparent hover:border-[--border]
+                       transition-all"
           >
             <LogOut className="w-4 h-4" />
             <span className="hidden sm:block">Salir</span>

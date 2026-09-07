@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { MapPin, Settings } from 'lucide-react'
+import { MapPin } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 
 export default async function HomePage() {
@@ -8,85 +8,69 @@ export default async function HomePage() {
   const { data: { user } } = await supabase.auth.getUser()
 
   return (
-    <main className="flex flex-col min-h-screen page-gradient">
-      {/* Círculos decorativos de fondo */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-pink-200/30 blur-3xl" />
-        <div className="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-pink-300/20 blur-3xl" />
-      </div>
+    <main className="flex flex-col min-h-screen bg-[#FAF8F6]">
+      <div className="flex flex-col items-center justify-center flex-1 px-6 py-12 gap-10">
 
-      <div className="relative flex flex-col items-center justify-center flex-1 px-4 py-8 gap-8">
-        {/* Título */}
-        <div className="text-center space-y-2">
-          <p className="text-xs font-semibold tracking-[0.25em] text-pink-400 uppercase">Calchaquí, Santa Fe</p>
-          <h1 className="text-3xl font-bold text-[#831843]">Nuestras tiendas</h1>
-          <p className="text-sm text-[#c4a0b8]">Elegí una tienda para ver el catálogo</p>
+        {/* Encabezado */}
+        <div className="text-center">
+          <p className="text-xs tracking-[0.2em] text-[--text-muted] mb-3">
+            Calchaquí, Santa Fe
+          </p>
+          <h1 className="font-serif text-4xl text-[--text] leading-tight">
+            Nuestras tiendas
+          </h1>
         </div>
 
-        {/* Cards de tiendas */}
-        <div className="flex flex-row gap-4 w-full max-w-sm mx-auto">
-          {/* Suefran */}
+        {/* Cards */}
+        <div className="flex flex-row gap-4 w-full max-w-xs mx-auto">
           <Link
             href="/suefran"
-            className="group flex-1 flex flex-col items-center gap-3 bg-white/80 backdrop-blur rounded-3xl p-5
-                       border border-pink-100 shadow-[0_4px_24px_rgba(244,114,182,0.12)]
-                       hover:shadow-[0_8px_32px_rgba(244,114,182,0.25)] hover:border-pink-200
-                       hover:-translate-y-1 transition-all duration-300"
+            className="group flex-1 flex flex-col items-center gap-3 bg-white rounded-2xl p-5
+                       border border-[--border] hover:border-[--accent] transition-all duration-200"
           >
-            <div className="relative w-full aspect-square drop-shadow-md group-hover:scale-105 transition-transform duration-300">
-              <Image src="/logos/suefran.jpg" alt="Suefran" fill className="object-contain" />
+            <div className="relative w-full aspect-square rounded-xl overflow-hidden bg-[--bg-subtle]">
+              <Image src="/logos/suefran.jpg" alt="Suefran" fill className="object-contain p-2 group-hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="text-center">
-              <p className="font-semibold text-[#831843] text-sm">Suefran</p>
-              <span className="inline-block mt-1 text-xs bg-pink-50 text-pink-400 px-2 py-0.5 rounded-full font-medium">
-                Accesorios
-              </span>
+              <p className="font-serif text-base text-[--text]">Suefran</p>
+              <p className="text-xs text-[--text-muted] mt-0.5">Accesorios</p>
             </div>
           </Link>
 
-          {/* Dulce Como Candi */}
           <Link
             href="/dulce-como-candi"
-            className="group flex-1 flex flex-col items-center gap-3 bg-white/80 backdrop-blur rounded-3xl p-5
-                       border border-pink-100 shadow-[0_4px_24px_rgba(244,114,182,0.12)]
-                       hover:shadow-[0_8px_32px_rgba(244,114,182,0.25)] hover:border-pink-200
-                       hover:-translate-y-1 transition-all duration-300"
+            className="group flex-1 flex flex-col items-center gap-3 bg-white rounded-2xl p-5
+                       border border-[--border] hover:border-[--accent] transition-all duration-200"
           >
-            <div className="relative w-full aspect-square drop-shadow-md group-hover:scale-105 transition-transform duration-300">
-              <Image src="/logos/dulcecomocandi.png" alt="Dulce Como Candi" fill className="object-contain" />
+            <div className="relative w-full aspect-square rounded-xl overflow-hidden bg-[--bg-subtle]">
+              <Image src="/logos/dulcecomocandi.png" alt="Dulce Como Candi" fill className="object-contain p-2 group-hover:scale-105 transition-transform duration-300" />
             </div>
             <div className="text-center">
-              <p className="font-semibold text-[#831843] text-sm">Dulce Como Candi</p>
-              <span className="inline-block mt-1 text-xs bg-pink-50 text-pink-400 px-2 py-0.5 rounded-full font-medium">
-                Ropa
-              </span>
+              <p className="font-serif text-base text-[--text]">Dulce Como Candi</p>
+              <p className="text-xs text-[--text-muted] mt-0.5">Ropa</p>
             </div>
           </Link>
         </div>
 
-        {/* Botón admin — solo visible si hay sesión */}
+        {/* Botón admin — solo si hay sesión */}
         {user && (
           <Link
             href="/admin"
-            className="flex items-center gap-2 px-6 py-3 rounded-2xl border border-pink-200
-                       bg-white/70 backdrop-blur text-[#831843] text-sm font-semibold
-                       shadow-[0_2px_12px_rgba(244,114,182,0.12)]
-                       hover:bg-white hover:border-pink-300 hover:shadow-[0_4px_16px_rgba(244,114,182,0.2)]
+            className="text-sm text-[--text-muted] border border-[--border] bg-white
+                       px-5 py-2.5 rounded-xl hover:border-[--accent] hover:text-[--accent]
                        transition-all duration-200"
           >
-            <Settings className="w-4 h-4" />
             Administración
           </Link>
         )}
       </div>
 
-      {/* Footer */}
-      <footer className="relative py-6 px-4 text-center border-t border-pink-100/60">
+      <footer className="py-6 px-4 text-center border-t border-[--border]">
         <a
           href="https://maps.google.com/?q=Roque+Sáenz+Peña+1054,+Calchaquí,+Santa+Fe"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 text-sm text-[#c4a0b8] hover:text-pink-400 transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs text-[--text-muted] hover:text-[--accent] transition-colors"
         >
           <MapPin className="w-3.5 h-3.5" />
           Roque Sáenz Peña 1054, Calchaquí, Santa Fe

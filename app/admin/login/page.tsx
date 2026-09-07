@@ -44,74 +44,62 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center px-4 page-gradient relative overflow-hidden">
-      {/* Decoración */}
-      <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-pink-200/40 blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-20 -left-20 w-72 h-72 rounded-full bg-rose-200/30 blur-3xl pointer-events-none" />
-
-      <div className="relative w-full max-w-sm">
-        {/* Card */}
-        <div className="bg-white/90 backdrop-blur rounded-3xl shadow-[0_8px_32px_rgba(244,114,182,0.18)] p-8 flex flex-col items-center gap-7 border border-pink-100">
-          {/* Logos */}
-          <div className="flex gap-4 items-center">
-            <div className="relative w-16 h-16 drop-shadow-sm">
-              <Image src="/logos/suefran.jpg" alt="Suefran" fill className="object-contain" />
-            </div>
-            <div className="w-px h-10 bg-pink-100" />
-            <div className="relative w-16 h-16 drop-shadow-sm">
-              <Image src="/logos/dulcecomocandi.png" alt="Dulce Como Candi" fill className="object-contain" />
-            </div>
+    <main className="min-h-screen flex items-center justify-center px-6 bg-[#FAF8F6]">
+      <div className="w-full max-w-sm">
+        {/* Logos */}
+        <div className="flex justify-center gap-5 mb-8">
+          <div className="relative w-14 h-14 rounded-xl overflow-hidden bg-[--bg-subtle]">
+            <Image src="/logos/suefran.jpg" alt="Suefran" fill className="object-contain p-1" />
           </div>
-
-          <div className="text-center space-y-1">
-            <h1 className="text-xl font-bold text-[#831843]">Panel de administración</h1>
-            <p className="text-sm text-[#c4a0b8]">Ingresá con tu usuario</p>
+          <div className="relative w-14 h-14 rounded-xl overflow-hidden bg-[--bg-subtle]">
+            <Image src="/logos/dulcecomocandi.png" alt="Dulce Como Candi" fill className="object-contain p-1" />
           </div>
-
-          <form onSubmit={handleLogin} className="w-full flex flex-col gap-4">
-            <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold text-[#c4a0b8] uppercase tracking-wider">Usuario</label>
-              <input
-                type="text"
-                value={usuario}
-                onChange={(e) => setUsuario(e.target.value)}
-                required
-                autoComplete="username"
-                placeholder="victoria / lucia / emilia"
-                className="border border-pink-100 bg-pink-50/50 rounded-xl px-4 py-3 text-sm text-[#4a1942]
-                           placeholder:text-pink-200 focus:outline-none focus:border-pink-300 focus:bg-white
-                           transition-all"
-              />
-            </div>
-
-            <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold text-[#c4a0b8] uppercase tracking-wider">Contraseña</label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                autoComplete="current-password"
-                className="border border-pink-100 bg-pink-50/50 rounded-xl px-4 py-3 text-sm text-[#4a1942]
-                           focus:outline-none focus:border-pink-300 focus:bg-white transition-all"
-              />
-            </div>
-
-            {error && (
-              <div className="bg-rose-50 border border-rose-200 rounded-xl px-4 py-2.5 text-sm text-rose-500 text-center">
-                {error}
-              </div>
-            )}
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="btn-primary w-full py-3.5 text-sm disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:transform-none"
-            >
-              {loading ? 'Entrando...' : 'Entrar'}
-            </button>
-          </form>
         </div>
+
+        <h1 className="font-serif text-2xl text-center text-[--text] mb-1">Panel de administración</h1>
+        <p className="text-sm text-center text-[--text-muted] mb-8">Ingresá con tu usuario</p>
+
+        <form onSubmit={handleLogin} className="flex flex-col gap-4">
+          <div className="flex flex-col gap-1.5">
+            <label className="text-sm font-medium text-[--text]">Usuario</label>
+            <input
+              type="text"
+              value={usuario}
+              onChange={(e) => setUsuario(e.target.value)}
+              required
+              autoComplete="username"
+              placeholder="victoria, lucia o emilia"
+              className="border border-[--border] bg-white rounded-xl px-4 py-3 text-[--text]
+                         placeholder:text-[--text-muted] focus:outline-none focus:border-[--accent]
+                         transition-colors"
+            />
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <label className="text-sm font-medium text-[--text]">Contraseña</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              autoComplete="current-password"
+              className="border border-[--border] bg-white rounded-xl px-4 py-3 text-[--text]
+                         focus:outline-none focus:border-[--accent] transition-colors"
+            />
+          </div>
+
+          {error && (
+            <p className="text-sm text-red-500 text-center">{error}</p>
+          )}
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="btn-primary w-full py-3.5 disabled:opacity-50 disabled:cursor-not-allowed mt-2"
+          >
+            {loading ? 'Entrando...' : 'Entrar'}
+          </button>
+        </form>
       </div>
     </main>
   )
