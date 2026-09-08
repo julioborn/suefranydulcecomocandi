@@ -124,7 +124,7 @@ export default function StoreCatalog({ store, storeSlug, categoryOrder, products
                           )}
                         </div>
                         <div className="p-3 border-t border-[#F0EBEd]">
-                          <p className="text-sm text-[--text] font-medium truncate leading-snug">{product.name}</p>
+                          <p className="text-sm text-[--text] font-medium leading-snug">{product.name}</p>
                           <p className="text-sm font-semibold text-[--accent] mt-0.5">
                             ${product.price.toLocaleString('es-AR')}
                           </p>
